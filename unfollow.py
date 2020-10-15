@@ -36,9 +36,17 @@ print(len(friends))
 #
 # friends[:100] = start from the beginning to the first 100 friends
 # This helps me avoid hitting the twitter api rate limit
-for f in friends[:100]:
-    if f not in followers:
-        print("Unfollow {0}?".format(api.get_user(f).screen_name))
-        if input("Y/N?") == 'y' or 'Y':
-            api.destroy_friendship(f)
+# for f in friends[:100]:
+#     if f not in followers:
+#         print("Unfollow {0}?".format(api.get_user(f).screen_name))
+#         if input("Y/N?") == 'y' or 'Y':
+#             api.destroy_friendship(f)
 
+# We are doing the opposite of what this bot was created for.
+# below, we are searching for followers we do not yet follow back to determine
+# if we want to follow them.
+for f in followers[:100]:
+    if f not in friends:
+        print("follow {0}?".format(api.get_user(f).screen_name))
+        if input("Y/N") == 'y' or 'Y':
+            api.create_friendship(f)
